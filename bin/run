@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(dirname "$0")
+MATHPASS=$SCRIPT_DIR/../misc/mathpass
+
+       #--mount type=bind,source=/dev/shm,target=/dev/shm \
+       #--ipc=host \
+       #--entrypoint=/bin/bash \
+       #--mount type=bind,source=/tmp,target=/tmp \
+       #--mount type=bind,source=/dev,target=/dev \
+       #--mount type=bind,source=/proc,target=/proc \
+       #--mount type=bind,source=/sys,target=/sys \
+docker run -it \
+       --mount type=bind,source="$MATHPASS",target=/mathpass \
+       --mount type=tmpfs,destination=/tmp \
+       mma-cont:13.0.0 "$@"

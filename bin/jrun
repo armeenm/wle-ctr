@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(dirname "$0")
+MMA_DIR=$(readlink -f $(which math))/../..
+JLINK_DIR=$MMA_DIR/libexec/Mathematica/SystemFiles/Links/JLink
+
+java \
+    -classpath "$JLINK_DIR/Examples/Part2":"$JLINK_DIR/JLink.jar" SampleProgram \
+    -linkmode launch \
+    -linkname "'$SCRIPT_DIR/run' -wstp" \
+    -linkprotocol TCPIP
