@@ -51,11 +51,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1642635915,
-        "narHash": "sha256-vabPA32j81xBO5m3+qXndWp5aqepe+vu96Wkd9UnngM=",
+        "lastModified": 1644525281,
+        "narHash": "sha256-D3VuWLdnLmAXIkooWAtbTGSQI9Fc1lkvAr94wTxhnTU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6d8215281b2f87a5af9ed7425a26ac575da0438f",
+        "rev": "48d63e924a2666baf37f4f14a18f19347fbd54a2",
         "type": "github"
       },
       "original": {
@@ -90,11 +90,11 @@
     },
     "utils": {
       "locked": {
-        "lastModified": 1642700792,
-        "narHash": "sha256-XqHrk7hFb+zBvRg6Ghl+AZDq03ov6OshJLiSWOoX5es=",
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "846b2ae0fc4cc943637d3d1def4454213e203cba",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
         "type": "github"
       },
       "original": {
@@ -124,7 +124,7 @@
         "utils": "utils_2"
       },
       "locked": {
-        "narHash": "sha256-MO6aKit9Fl+lDFltwgCC3e87sLalrPYHWJxRO4pghSE=",
+        "narHash": "sha256-mvWzK03c09jvWxeb33yZjfDTwX5h2zVJum0heqXw7TQ=",
         "path": "/home/armeen/src/wolframengine",
         "type": "path"
       },

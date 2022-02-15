@@ -24,36 +24,14 @@
         wolframengine = inputs.wolframengine.defaultPackage.${system};
 
       in rec {
-        packages.${name} = pkgs.dockerTools.buildLayeredImage {
-          inherit name;
-          tag = version;
-
-          contents = with pkgs; [
-            coreutils
-            gnugrep
-            #iputils
-            ncurses
-            wolframengine
-          ];
-
-          config = {
-            Entrypoint = [ "/bin/WolframKernel" ];
-          };
-        };
-
-        packages."${name}2" = nix2container.buildImage {
+        packages.${name} = nix2container.buildImage {
           inherit name;
           tag = version;
 
           contents = [
             (pkgs.symlinkJoin {
               name = "root";
-              paths = [
-                wolframengine
-              ] ++ (with pkgs; [
-                bash
-                coreutils
-                gnugrep
+              paths = [ wolframengine ] ++ (with pkgs; [
                 ncurses
               ]);
             })
