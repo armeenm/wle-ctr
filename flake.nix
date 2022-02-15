@@ -47,6 +47,7 @@
         devShell = pkgs.mkShell {
           packages = with pkgs; [
             jdk11
+            skopeo
           ];
         };
       }
