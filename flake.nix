@@ -14,39 +14,20 @@
         name = "wolframengine";
         version = "13.0.0";
 
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        lib = pkgs.lib;
+        pkgs = nixpkgs.legacyPackages.${system};
 
         nix2container = inputs.nix2container.packages.${system}.nix2container;
         wolframengine = inputs.wolframengine.defaultPackage.${system};
-
+        
       in rec {
-        packages.${name} = nix2container.buildImage {
-          inherit name;
-          tag = version;
-
-          contents = [
-            (pkgs.symlinkJoin {
-              name = "root";
-              paths = [ wolframengine ] ++ (with pkgs; [
-                ncurses
-              ]);
-            })
-          ];
-
-          config = {
-            Entrypoint = [ "/bin/WolframKernel" ];
-          };
+        packages.${name} = import ./default.nix {
+          inherit pkgs nix2container wolframengine;
         };
 
         defaultPackage = packages.${name};
 
         devShell = pkgs.mkShell {
           packages = with pkgs; [
-            jdk11
             skopeo
           ];
         };

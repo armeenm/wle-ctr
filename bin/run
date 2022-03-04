@@ -3,7 +3,6 @@
 SCRIPT_DIR=$(dirname "$0")
 MATHPASS=$SCRIPT_DIR/../misc/mathpass
 
-docker run \
+docker run -it \
        --mount type=bind,source="$MATHPASS",target=/mathpass \
-       --mount type=tmpfs,destination=/tmp \
        wolframengine:13.0.0 "$@"
