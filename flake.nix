@@ -21,7 +21,8 @@
         
       in rec {
         packages.${name} = import ./default.nix {
-          inherit pkgs nix2container wolframengine;
+          inherit name pkgs nix2container wolframengine;
+          tag = version;
         };
 
         defaultPackage = packages.${name};

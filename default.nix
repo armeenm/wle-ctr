@@ -1,4 +1,4 @@
-{ pkgs, nix2container, wolframengine }:
+{ name, tag, pkgs, nix2container, wolframengine }:
 
 let
   tmp = pkgs.runCommand "tmp" {} ''
@@ -6,8 +6,7 @@ let
   '';
 
 in nix2container.buildImage {
-  name = "wolframengine";
-  tag = "13.0.0";
+  inherit name tag;
 
   contents = [
     tmp
@@ -15,9 +14,7 @@ in nix2container.buildImage {
       name = "root";
       paths = [ wolframengine ] ++ (with pkgs; [
         bash
-        coreutils
         ncurses
-        openssh
       ]);
     })
   ];
