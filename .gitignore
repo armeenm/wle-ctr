@@ -1,5 +1,5 @@
 /.direnv/
 /.envrc
-/result
 /images
 /misc
+result*
