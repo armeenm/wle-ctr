@@ -1,4 +1,4 @@
-{ name, tag, pkgs, nix2container, wolframengine }:
+{ name, tag, pkgs, nix2container }:
 
 let
   tmp = pkgs.runCommand "tmp" {} ''
@@ -12,19 +12,20 @@ let
 in nix2container.buildImage {
   inherit name tag;
 
-  contents = [
+  copyToRoot = [
     tmp
     fcCache
 
     (pkgs.symlinkJoin {
       name = "root";
-      paths = [ wolframengine ] ++ (with pkgs; [
+      paths = with pkgs; [
         bash
         coreutils
         fontconfig.out
         ncurses
         readline
-      ]);
+        wolfram-engine
+      ];
     })
   ];
 

@@ -5,23 +5,24 @@
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     utils.url = github:numtide/flake-utils;
     nix2container.url = github:nlewo/nix2container;
-    wolframengine.url = path:/home/armeen/src/wolframengine;
   };
 
   outputs = inputs@{ self, nixpkgs, utils, ... }:
     utils.lib.eachDefaultSystem (system:
       let
         name = "wolframengine";
-        version = "13.0.0";
+        version = "13.0.1";
 
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
         nix2container = inputs.nix2container.packages.${system}.nix2container;
-        wolframengine = inputs.wolframengine.defaultPackage.${system};
         
       in rec {
         packages.${name} = import ./default.nix {
-          inherit name pkgs nix2container wolframengine;
+          inherit name pkgs nix2container;
           tag = version;
         };
 
