@@ -7,31 +7,40 @@
     nix2container.url = github:nlewo/nix2container;
   };
 
-  outputs = inputs@{ self, nixpkgs, utils, ... }:
+  outputs = inputs@{ self, utils, ... }:
     utils.lib.eachDefaultSystem (system:
       let
-        name = "wolframengine";
-        version = "13.0.1";
+        pkgs = rec {
+          nixpkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
 
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
+          nix2container = inputs.nix2container.packages.${system};
+
+          stdenv = nixpkgs.stdenvNoCC;
+          mkShell = nixpkgs.mkShell.override { inherit stdenv; };
         };
 
-        nix2container = inputs.nix2container.packages.${system}.nix2container;
+        packages = rec {
+          default = wle-ctr;
+          wle-ctr = import ./. {
+            inherit pkgs;
+          };
+        };
         
       in rec {
-        packages.${name} = import ./default.nix {
-          inherit name pkgs nix2container;
-          tag = version;
-        };
-
-        defaultPackage = packages.${name};
+        inherit packages;
 
         devShell = pkgs.mkShell {
-          packages = with pkgs; [
+          packages = with pkgs.nixpkgs; [
+            podman
             skopeo
           ];
+
+          shellHook = ''
+            export PATH=$PWD/util:$PATH
+          '';
         };
       }
     );

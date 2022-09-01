@@ -1,24 +1,27 @@
-{ name, tag, pkgs, nix2container }:
+{ pkgs }:
 
 let
-  tmp = pkgs.runCommand "tmp" {} ''
+  nix2container = pkgs.nix2container.nix2container;
+
+  tmp = pkgs.nixpkgs.runCommand "tmp" {} ''
     mkdir -p $out/tmp
   '';
 
-  fcCache = pkgs.runCommand "fcCache" {} ''
+  fcCache = pkgs.nixpkgs.runCommand "fcCache" {} ''
     mkdir -p $out/var/cache/fontconfig
   '';
 
 in nix2container.buildImage {
-  inherit name tag;
+  name = "wolframengine";
+  tag = "13.1.0";
 
   copyToRoot = [
     tmp
     fcCache
 
-    (pkgs.symlinkJoin {
+    (pkgs.nixpkgs.symlinkJoin {
       name = "root";
-      paths = with pkgs; [
+      paths = with pkgs.nixpkgs; [
         bash
         coreutils
         fontconfig.out
